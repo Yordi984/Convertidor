@@ -7,7 +7,7 @@ document.getElementById('conversionForm').addEventListener('submit', async funct
     const options = {
         method: 'GET',
         headers: {
-            'x-rapidapi-key': 'TU_RAPIDAPI_KEY', // Cambia por tu clave
+            'x-rapidapi-key': '6727fccc93msh40e3ed44d3579e8p164ba2jsnbd91ff1f0b1f', // Cambia por tu clave
             'x-rapidapi-host': 'youtube-mp3-downloader2.p.rapidapi.com'
         }
     };
