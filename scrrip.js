@@ -1,57 +1,52 @@
-const form = document.getElementById('conversionForm');
-const resultDiv = document.getElementById('result');
-
-form.onsubmit = async (event) => {
-    event.preventDefault(); // Evita que se recargue la página
-    const url = document.getElementById('url').value;
-
-    const apiUrl = `https://youtube-mp3-downloader2.p.rapidapi.com/ytmp3/ytmp3/long_video.php?url=${encodeURIComponent(url)}`;
-    const options = {
-        method: 'GET',
-        headers: {
-            'x-rapidapi-key': '6727fccc93msh40e3ed44d3579e8p164ba2jsnbd91ff1f0b1f',
-            'x-rapidapi-host': 'youtube-mp3-downloader2.p.rapidapi.com'
-        }
-    };
-
-    try {
-        const response = await fetch(apiUrl, options);
-        if (!response.ok) {
-            throw new Error(`Error: ${response.status} ${response.statusText}`);
-        }
-        const data = await response.json(); // Asegúrate de que el formato sea JSON
-
-        // Supongamos que la respuesta tiene un campo 'download_url' con el enlace al MP3
-        const downloadUrl = data.download_url; 
-
-        // Crear un enlace para la descarga
-        const a = document.createElement('a');
-        a.href = downloadUrl;
-        a.download = 'audio.mp3'; // Nombre del archivo descargado
-        document.body.appendChild(a);
-        a.click(); // Simula un clic en el enlace
-        document.body.removeChild(a); // Limpia el DOM
-    } catch (error) {
-        resultDiv.innerHTML = `Error al convertir: ${error.message}`;
+const urlApi = 'https://youtube-mp3-downloader2.p.rapidapi.com/ytmp3/ytmp3/long_video.php'; // Asegúrate de que este endpoint sea correcto
+const options = {
+    method: 'POST',
+    headers: {
+        'x-rapidapi-key': '6727fccc93msh40e3ed44d3579e8p164ba2jsnbd91ff1f0b1f', // Reemplaza con tu clave real
+        'x-rapidapi-host': 'youtube-mp3-downloader2.p.rapidapi.com',
+        'Content-Type': 'application/json'
     }
 };
 
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('conversionForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const videoUrl = document.getElementById('url').value;
+
+        try {
+            const response = await fetch(urlApi, {
+                ...options,
+                body: JSON.stringify({ url: videoUrl })
+            });
+
+            if (!response.ok) {
+                const errorResponse = await response.text();
+                console.error('Error de API:', errorResponse);
+                document.getElementById('result').textContent = 'Error: ' + errorResponse;
+                return;
+            }
+
             const data = await response.json();
+            console.log(data); // Para depurar
 
             if (data.success) {
                 const downloadLink = data.download_url; 
-                const linkElement = document.createElement('a');
-                linkElement.href = downloadLink;
-                linkElement.download = 'video.mp3';
-                document.body.appendChild(linkElement);
-                linkElement.click();
-                document.body.removeChild(linkElement);
+                if (downloadLink) {
+                    const linkElement = document.createElement('a');
+                    linkElement.href = downloadLink;
+                    linkElement.download = 'video.mp3'; // Nombre del archivo
+                    document.body.appendChild(linkElement);
+                    linkElement.click();
+                    document.body.removeChild(linkElement);
+                } else {
+                    document.getElementById('result').textContent = 'El archivo no está disponible.';
+                }
             } else {
                 document.getElementById('result').textContent = 'Error: ' + data.message;
             }
         } catch (error) {
-            console.error('Fetch Error:', error);
-            document.getElementById('result').textContent = 'Error converting the video. Please try again.';
+            console.error('Error de Fetch:', error);
+            document.getElementById('result').textContent = 'Error al convertir el video. Por favor, intenta de nuevo.';
         }
     });
 });
