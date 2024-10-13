@@ -1,30 +1,30 @@
-const urlApi = 'https://youtube-mp3-downloader2.p.rapidapi.com/ytmp3/ytmp3'; 
-const options = {
-    method: 'POST',
-    headers: {
-        'x-rapidapi-key': 'YOUR_API_KEY', 
-        'x-rapidapi-host': 'youtube-mp3-downloader2.p.rapidapi.com',
-        'Content-Type': 'application/json'
+const form = document.getElementById('conversionForm');
+const resultDiv = document.getElementById('result');
+
+form.onsubmit = async (event) => {
+    event.preventDefault(); // Evita que se recargue la página
+    const url = document.getElementById('url').value;
+
+    const apiUrl = `https://youtube-mp3-downloader2.p.rapidapi.com/ytmp3/ytmp3/long_video.php?url=${encodeURIComponent(url)}`;
+    const options = {
+        method: 'GET',
+        headers: {
+            'x-rapidapi-key': '6727fccc93msh40e3ed44d3579e8p164ba2jsnbd91ff1f0b1f',
+            'x-rapidapi-host': 'youtube-mp3-downloader2.p.rapidapi.com'
+        }
+    };
+
+    try {
+        const response = await fetch(apiUrl, options);
+        if (!response.ok) {
+            throw new Error(`Error: ${response.status} ${response.statusText}`);
+        }
+        const result = await response.text();
+        resultDiv.innerHTML = result; // Muestra el resultado en el div
+    } catch (error) {
+        resultDiv.innerHTML = `Error al convertir: ${error.message}`;
     }
 };
-
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('conversionForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const videoUrl = document.getElementById('url').value;
-
-        try {
-            const response = await fetch(urlApi, {
-                ...options,
-                body: JSON.stringify({ url: videoUrl })
-            });
-
-            if (!response.ok) {
-                const errorResponse = await response.text();
-                console.error('API Error:', errorResponse);
-                document.getElementById('result').textContent = 'Error: ' + errorResponse;
-                return;
-            }
 
             const data = await response.json();
 
