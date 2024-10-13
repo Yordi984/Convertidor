@@ -9,7 +9,7 @@ document.getElementById('conversionForm').addEventListener('submit', async funct
     loadingDiv.style.display = 'block';
     resultDiv.innerHTML = ''; // Limpiar resultados anteriores
 
-    const apiUrl = `https://youtube-to-mp315.p.rapidapi.com/download?url=${encodeURIComponent(urlInput)}&format=mp3`;
+    const apiUrl = 'https://youtube-mp310.p.rapidapi.com/download/mp3?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dphd1U2JIfUA';
     const options = {
         method: 'POST',
         headers: {
