@@ -11,7 +11,7 @@ document.getElementById('conversionForm').addEventListener('submit', async funct
 
     const apiUrl = 'https://youtube-mp310.p.rapidapi.com/download/mp3?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3Dphd1U2JIfUA';
     const options = {
-        method: 'POST',
+        method: 'GET',
         headers: {
             'x-rapidapi-key': '6727fccc93msh40e3ed44d3579e8p164ba2jsnbd91ff1f0b1f',
             'x-rapidapi-host': 'youtube-to-mp315.p.rapidapi.com',
