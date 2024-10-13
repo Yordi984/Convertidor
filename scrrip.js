@@ -8,31 +8,33 @@ const options = {
     }
 };
 
-document.getElementById('conversionForm').addEventListener('submit', async (event) => {
-    event.preventDefault(); // Evita el envío del formulario
-    const videoUrl = document.getElementById('url').value;
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('conversionForm').addEventListener('submit', async (event) => {
+        event.preventDefault(); // Evita el envío del formulario
+        const videoUrl = document.getElementById('url').value;
 
-    // Envía la solicitud a la API
-    try {
-        const response = await fetch(urlApi, {
-            ...options,
-            body: JSON.stringify({ url: videoUrl })
-        });
-        const data = await response.json();
+        // Envía la solicitud a la API
+        try {
+            const response = await fetch(urlApi, {
+                ...options,
+                body: JSON.stringify({ url: videoUrl })
+            });
+            const data = await response.json();
 
-        if (data.success) {
-            const downloadLink = data.download_url; // Asegúrate de que la API devuelva esta URL
-            const linkElement = document.createElement('a');
-            linkElement.href = downloadLink;
-            linkElement.download = 'video.mp3'; // Nombre del archivo a descargar
-            document.body.appendChild(linkElement);
-            linkElement.click();
-            document.body.removeChild(linkElement);
-        } else {
-            document.getElementById('result').textContent = 'Error: ' + data.message;
+            if (data.success) {
+                const downloadLink = data.download_url; // Asegúrate de que la API devuelva esta URL
+                const linkElement = document.createElement('a');
+                linkElement.href = downloadLink;
+                linkElement.download = 'video.mp3'; // Nombre del archivo a descargar
+                document.body.appendChild(linkElement);
+                linkElement.click();
+                document.body.removeChild(linkElement);
+            } else {
+                document.getElementById('result').textContent = 'Error: ' + data.message;
+            }
+        } catch (error) {
+            console.error(error);
+            document.getElementById('result').textContent = 'Error al convertir el video. Inténtalo de nuevo.';
         }
-    } catch (error) {
-        console.error(error);
-        document.getElementById('result').textContent = 'Error al convertir el video. Inténtalo de nuevo.';
-    }
+    });
 });
