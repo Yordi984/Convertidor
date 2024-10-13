@@ -6,6 +6,7 @@
     <link rel="icon" href="logo.png" type="image/x-icon">
     <link rel="stylesheet" href="diseño.css">
     <title>Yofli Converter</title>
+    <script src="scrrip.js"></script>
 </head>
 <body>
     
@@ -24,39 +25,6 @@
 </form>
     </div>
 
-
-    <script>
-        document.getElementById('conversionForm').addEventListener('submit', async (event) => {
-            event.preventDefault();
-
-            const url = document.getElementById('url').value;
-            const message = document.getElementById('message');
-
-            try {
-                const response = await fetch('/convert', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ url })
-                });
-
-                if (!response.ok) {
-                    throw new Error('Error en la conversión');
-                }
-
-                const blob = await response.blob();
-                const urlObject = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = urlObject;
-                a.download = 'audio.mp3';
-                a.click();
-                URL.revokeObjectURL(urlObject);
-            } catch (error) {
-                message.textContent = 'Error: ' + error.message;
-            }
-        });
-    </script>
     
 </body>
 </html>
