@@ -15,6 +15,8 @@ document.getElementById('conversionForm').addEventListener('submit', async funct
     try {
         const response = await fetch(apiUrl, options);
         const result = await response.json(); // Asegúrate de que la respuesta sea JSON
+        console.log(result); // Imprimir la respuesta en la consola
+        
 
         // Asegúrate de que esta propiedad existe
         if (result.mp3Url) {
