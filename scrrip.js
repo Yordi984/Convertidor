@@ -1,36 +1,24 @@
-document.getElementById('conversionForm').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Evita el envío del formulario por defecto
+const urlApi = 'https://youtube-mp3-downloader2.p.rapidapi.com/ytmp3/ytmp3/long_video.php';
+const options = {
+    method: 'GET',
+    headers: {
+        'x-rapidapi-key': '6727fccc93msh40e3ed44d3579e8p164ba2jsnbd91ff1f0b1f',
+        'x-rapidapi-host': 'youtube-mp3-downloader2.p.rapidapi.com'
+    }
+};
 
+document.getElementById('conversionForm').addEventListener('submit', async (event) => {
+    event.preventDefault(); // Evita el envío del formulario
     const videoUrl = document.getElementById('url').value;
-    const resultDiv = document.getElementById('result');
-    const apiUrl = 'https://yt-search-and-download-mp3.p.rapidapi.com/mp3';
 
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'x-rapidapi-key': 'TU_CLAVE_API', // Reemplaza con tu clave API
-            'x-rapidapi-host': 'yt-search-and-download-mp3.p.rapidapi.com'
-        },
-        body: JSON.stringify({ url: videoUrl }) // Envía la URL del video
-    };
+    // Aquí puedes agregar lógica para construir la URL de la API con el enlace del video si es necesario
 
     try {
-        const response = await fetch(apiUrl, options);
-        const result = await response.json(); // Parsear como JSON
-
-        if (result.link) {
-            const downloadLink = document.createElement('a');
-            downloadLink.href = result.link;
-            downloadLink.download = 'video.mp3'; // Nombre por defecto para el archivo
-            downloadLink.innerText = 'Descargar MP3';
-            resultDiv.innerHTML = ''; // Limpia el div de resultados
-            resultDiv.appendChild(downloadLink); // Añade el enlace al div
-        } else {
-            resultDiv.innerHTML = 'Error: ' + (result.message || 'Error desconocido');
-        }
+        const response = await fetch(urlApi, options);
+        const result = await response.text();
+        document.getElementById('result').textContent = result; // Muestra el resultado
     } catch (error) {
-        console.error('Error:', error);
-        resultDiv.innerHTML = 'Error al realizar la solicitud.';
+        console.error(error);
+        document.getElementById('result').textContent = 'Error al convertir el video. Inténtalo de nuevo.';
     }
 });
