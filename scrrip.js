@@ -19,8 +19,18 @@ form.onsubmit = async (event) => {
         if (!response.ok) {
             throw new Error(`Error: ${response.status} ${response.statusText}`);
         }
-        const result = await response.text();
-        resultDiv.innerHTML = result; // Muestra el resultado en el div
+        const data = await response.json(); // Asegúrate de que el formato sea JSON
+
+        // Supongamos que la respuesta tiene un campo 'download_url' con el enlace al MP3
+        const downloadUrl = data.download_url; 
+
+        // Crear un enlace para la descarga
+        const a = document.createElement('a');
+        a.href = downloadUrl;
+        a.download = 'audio.mp3'; // Nombre del archivo descargado
+        document.body.appendChild(a);
+        a.click(); // Simula un clic en el enlace
+        document.body.removeChild(a); // Limpia el DOM
     } catch (error) {
         resultDiv.innerHTML = `Error al convertir: ${error.message}`;
     }
