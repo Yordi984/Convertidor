@@ -9,22 +9,22 @@
 </head>
 <body>
     
-    <h1 class="neon-text">Yconverter</h1>
+    <h1 class="titulo">Yconverter</h1>
     
     <p>Convierte fácilmente tus videos de YouTube a archivos MP3. Solo ingresa el enlace del video y descarga tu música en segundos.</p>
     
     <div>
-        <form id="conversionForm">
+        <form id="div_convertidor">
             <div id="link">
                 <input type="text" id="url" name="url" placeholder="Introduce el enlace de YouTube" required>
             </div>
             <br>
-           <button id="boton" type="submit" >Convertir a MP3</button>
+          <!-- <button id="boton" type="submit" >Convertir a MP3</button> -->
         </form>
-        <div id="result"></div> <br>
-
-        <div id="loading" style="display: none;">Cargando...</div> <!-- Indicador de carga -->
+               
     </div>
+    <iframe src="https://api.vevioz.com/api/button/mp3/iiMrs3vOm_w" width="100%" height="100%" allowtransparency="true" scrolling="no" style="border:none"></iframe>
+    
 
 </body>
 <script src="script.js" defer></script>
