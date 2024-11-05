@@ -1,37 +1,53 @@
-document.getElementById('div_convertidor').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Evitar que el formulario se envíe de forma tradicional
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('div_convertidor');
+    const urlInput = document.getElementById('url');
+    const messageDiv = document.createElement('div'); // Crear un div para mostrar mensajes
+    document.body.appendChild(messageDiv);
 
-    const url = document.getElementById('url').value;
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Evitar el envío del formulario por defecto
 
-    try {
-        const response = await fetch('https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download', {
+        const ytUrl = urlInput.value;
+
+        // Verificar si la URL está vacía
+        if (!ytUrl) {
+            alert('Por favor, ingresa una URL de YouTube.');
+            return;
+        }
+
+        // Enviar la solicitud a la API
+        fetch('https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download', {  // Reemplaza con tu URL de API
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ url }),
+            body: JSON.stringify({ url: ytUrl })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta de la API: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.file_path) {
+                const link = document.createElement('a');
+                link.href = data.file_path; // URL del archivo MP3
+                link.download = data.file_path.split('/').pop(); // Nombre del archivo para descargar
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                messageDiv.textContent = '¡Descarga completada con éxito!';
+                messageDiv.style.color = 'green';
+            } else {
+                messageDiv.textContent = 'Error: ' + data.error;
+                messageDiv.style.color = 'red';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            messageDiv.textContent = 'Ocurrió un error: ' + error.message;
+            messageDiv.style.color = 'red';
         });
-
-        if (!response.ok) {
-            throw new Error(`Error: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-
-        if (data.file_path) {
-            // Crear un enlace de descarga
-            const link = document.createElement('a');
-            link.href = data.file_path; // La ruta al archivo MP3
-            link.download = data.file_path.split('/').pop(); // Obtener el nombre del archivo
-            document.body.appendChild(link);
-            link.click(); // Simular un clic en el enlace
-            document.body.removeChild(link); // Eliminar el enlace del DOM
-            alert('¡Descarga completada con éxito!'); // Mensaje de éxito
-        } else {
-            alert('Error: ' + data.error);
-        }
-    } catch (error) {
-        console.error('Error en la descarga:', error);
-        alert('Ocurrió un error durante la descarga.');
-    }
+    });
 });
