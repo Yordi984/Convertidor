@@ -17,10 +17,15 @@ document.getElementById('div_convertidor').addEventListener('submit', async func
         }
 
         const data = await response.json();
+        console.log(data); // Para verificar la respuesta de la API
 
-        // Suponiendo que tu API devuelve la URL del MP3
-        const mp3Url = data.mp3Url; // Cambia esto según la estructura de tu respuesta
-        downloadMP3(mp3Url); // Llamar a la función para descargar el MP3
+        // Verificar si se recibió la URL del MP3
+        if (!data.file_path) {
+            throw new Error('No se recibió la URL del MP3.');
+        }
+
+        // Llamar a la función para descargar el MP3
+        downloadMP3(data.file_path);
 
     } catch (error) {
         console.error('Error al consumir la API:', error.message);
@@ -30,10 +35,11 @@ document.getElementById('div_convertidor').addEventListener('submit', async func
 
 // Función para descargar el archivo MP3
 const downloadMP3 = (url) => {
+    // Crear un enlace temporal para la descarga
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'audio.mp3'; // Nombre del archivo de descarga
+    link.setAttribute('download', 'audio.mp3'); // Nombre del archivo de descarga
     document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    link.click(); // Simular clic en el enlace
+    document.body.removeChild(link); // Eliminar el enlace temporal
 };
