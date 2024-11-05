@@ -1,37 +1,34 @@
-document
-  .getElementById("div_convertidor")
-  .addEventListener("submit", async function (event) {
-    event.preventDefault(); // Evita que el formulario se envíe de manera tradicional
+document.getElementById('div_convertidor').addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-    const ytUrl = document.getElementById("url").value; // Obtiene la URL del input
+  const url = document.getElementById('url').value;
 
-    const data = {
-      url: ytUrl,
-      output_directory: "downloads", // Puedes ajustar esto si es necesario
-    };
+  if (!url) {
+    alert('Por favor, ingresa un enlace de YouTube.');
+    return;
+  }
 
-    try {
-      const response = await fetch(
-        "https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data),
-        }
-      );
+  try {
+    // Realizar la solicitud POST a la API
+    const response = await fetch('https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download', {  // Cambia https://tudominio.com al dominio de tu API en Azure
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url }),
+    });
 
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status}`);
-      }
+    const data = await response.json();
 
-      const result = await response.json();
-      console.log(result);
-      // Manejar la respuesta aquí, por ejemplo, mostrar un mensaje al usuario
-      alert(result.message);
-    } catch (error) {
-      console.error("Error al descargar:", error);
-      alert("Ocurrió un error: " + error.message);
+    if (response.ok) {
+      // Mostrar enlace de descarga si la conversión fue exitosa
+      alert("¡Descarga completada!"); 
+      window.location.href = data.file_path;
+    } else {
+      alert(`Error: ${data.message}`);
     }
-  });
+  } catch (error) {
+    console.error('Ocurrió un error:', error);
+    alert('Ocurrió un error durante la conversión. Inténtalo de nuevo más tarde.');
+  }
+});
