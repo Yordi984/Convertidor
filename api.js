@@ -10,7 +10,7 @@ document.getElementById('div_convertidor').addEventListener('submit', async (e) 
 
   try {
     // Realizar la solicitud POST a la API
-    const response = await fetch('https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download', {  // Cambia https://tudominio.com al dominio de tu API en Azure
+    const response = await fetch('https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download', { // Cambia a la URL de tu API en Azure
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -20,12 +20,11 @@ document.getElementById('div_convertidor').addEventListener('submit', async (e) 
 
     const data = await response.json();
 
-    if (response.ok) {
-      // Mostrar enlace de descarga si la conversión fue exitosa
-      alert("¡Descarga completada!"); 
+    if (response.ok && data.file_path) {
+      // Redirige a la descarga del archivo MP3
       window.location.href = data.file_path;
     } else {
-      alert(`Error: ${data.message}`);
+      alert(`Error: ${data.message || 'No se pudo completar la conversión.'}`);
     }
   } catch (error) {
     console.error('Ocurrió un error:', error);
