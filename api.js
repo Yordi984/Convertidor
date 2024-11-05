@@ -4,7 +4,7 @@ document.getElementById('div_convertidor').addEventListener('submit', async func
     const urlInput = document.getElementById('url').value; // Obtener el enlace de YouTube
 
     try {
-        const response = await fetch('https://tu-api-url.com/endpoint', { // Reemplaza con la URL de tu API
+        const response = await fetch('https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download', { // Reemplaza con la URL de tu API
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
