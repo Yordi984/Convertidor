@@ -1,45 +1,33 @@
-document.getElementById('div_convertidor').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Evita el envío del formulario de forma tradicional
+// api.js
+document.getElementById('div_convertidor').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevenir el envío del formulario por defecto
 
-    const urlInput = document.getElementById('url').value; // Obtener el enlace de YouTube
+    const url = document.getElementById('url').value; // Obtener el enlace de YouTube
 
-    try {
-        const response = await fetch('https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download', { // Reemplaza con la URL de tu API
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ url: urlInput }) // Enviar el enlace como JSON
-        });
-
+    // Realizar la solicitud POST a la API
+    fetch('https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download', { // Reemplaza 'https://tu-api-url' con la URL de tu API
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ url: url }) // Enviar el enlace en formato JSON
+    })
+    .then(response => {
         if (!response.ok) {
-            throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+            throw new Error('Error al descargar el MP3');
         }
-
-        const data = await response.json();
-        console.log(data); // Para verificar la respuesta de la API
-
-        // Verificar si se recibió la URL del MP3
-        if (!data.file_path) {
-            throw new Error('No se recibió la URL del MP3.');
-        }
-
-        // Llamar a la función para descargar el MP3
-        downloadMP3(data.file_path);
-
-    } catch (error) {
-        console.error('Error al consumir la API:', error.message);
-        alert('Error al convertir el video. Por favor, verifica la URL e intenta de nuevo.');
-    }
+        return response.blob(); // Convertir la respuesta a un blob
+    })
+    .then(blob => {
+        const link = document.createElement('a'); // Crear un enlace de descarga
+        link.href = URL.createObjectURL(blob); // Crear un objeto URL para el blob
+        link.download = 'audio.mp3'; // Nombre del archivo que se descargará
+        document.body.appendChild(link); // Añadir el enlace al documento
+        link.click(); // Simular clic en el enlace para iniciar la descarga
+        document.body.removeChild(link); // Eliminar el enlace después de usarlo
+        URL.revokeObjectURL(link.href); // Revocar el objeto URL
+    })
+    .catch(error => {
+        alert(error.message); // Mostrar mensaje de error al usuario
+    });
 });
-
-// Función para descargar el archivo MP3
-const downloadMP3 = (url) => {
-    // Crear un enlace temporal para la descarga
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', 'audio.mp3'); // Nombre del archivo de descarga
-    document.body.appendChild(link);
-    link.click(); // Simular clic en el enlace
-    document.body.removeChild(link); // Eliminar el enlace temporal
-};
