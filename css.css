@@ -1,7 +1,7 @@
 body {
 
-    font-family: 'Courier New';
-    background-color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color:black;
     max-width: 100%;
 }
 .container {
@@ -18,23 +18,11 @@ input[type="text"] {
     border: 1px solid #ddd;
     border-radius: 4px;
 }
-input[type="submit"] {
-    width: 10rem;
-    padding: 10px 20px;
-    border: none;
-    background-color: #0600b3;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-}
-input[type="submit"]:hover {
-    background-color: #0600b3;
-    
-}
+
+  
 
 h1{
-color: #0600b3;
+  color: rgb(100, 61, 136);
    padding: 4rem 0 4rem 0;
    display: flex;
    justify-content: center;
@@ -48,26 +36,69 @@ div{
 p{
     width: 40rem;
     padding: 0 0 0 25rem;
+    color: rgb(100, 61, 136);
     
-}
-#boton{
-    margin: 0 20rem;
-    padding: 0.7rem;
-    border-radius: 4rem;
-    background-color: #0600b3;
-    color: white;
+   
 }
 
-#boton:hover{
-  background-color: aqua;
-  color: black;
-}
+
+/* From Uiverse.io by cssbuttons-io */ 
+button {
+  --glow-color: rgb(217, 176, 255);
+  --glow-spread-color: rgba(191, 123, 255, 0.781);
+  --enhanced-glow-color: rgb(231, 206, 255);
+  --btn-color: rgb(100, 61, 136);
+  border: .25em solid var(--glow-color);
+  padding: 1em 3em;
+  color: var(--glow-color);
+  font-size: 15px;
+  font-weight: bold;
+  background-color: var(--btn-color);
+  border-radius: 1em;
+  outline: none;
+  box-shadow: 0 0 1em .25em var(--glow-color),
+         0 0 4em 1em var(--glow-spread-color),
+         inset 0 0 .75em .25em var(--glow-color);
+  text-shadow: 0 0 .5em var(--glow-color);
+  position: relative;
+  transition: all 0.3s;
+  margin-left: 10rem;
+  margin-top: 6rem;
+ }
+ 
+ button::after {
+  pointer-events: none;
+  content: "";
+  position: absolute;
+  top: 120%;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--glow-spread-color);
+  filter: blur(2em);
+  opacity: .7;
+  transform: perspective(1.5em) rotateX(35deg) scale(1, .6);
+ }
+ 
+ button:hover {
+  color: var(--btn-color);
+  background-color: var(--glow-color);
+  box-shadow: 0 0 1em .25em var(--glow-color),
+         0 0 4em 2em var(--glow-spread-color),
+         inset 0 0 .75em .25em var(--glow-color);
+ }
+ 
+ button:active {
+  box-shadow: 0 0 0.6em .25em var(--glow-color),
+         0 0 2.5em 2em var(--glow-spread-color),
+         inset 0 0 .5em .25em var(--glow-color);
+ }
 
 
 #link{
     display: flex;
     justify-content: center;
-
+    padding-top: 2em;
 }
 
 
@@ -106,7 +137,6 @@ body {
 
 
   
-
 
 
 
