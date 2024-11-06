@@ -12,33 +12,22 @@ document.getElementById('div_convertidor').addEventListener('submit', function(e
         },
         body: JSON.stringify({ url: url }) // Enviar el enlace en formato JSON
     })
-    .then(response => response.json()) // Obtener la respuesta como JSON
-    .then(data => {
-        if (data.error) {
-            throw new Error(data.error); // Si hay un error en la respuesta, mostrarlo
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error al descargar el MP3');
         }
-
-        // Obtener la URL y el nombre del archivo desde la respuesta de la API
-        const fileUrl = data.file_path;  // Ruta al archivo descargado
-        const fileName = data.file_name; // Nombre del archivo (título del video)
-
-        // Realizar la descarga del archivo
-        fetch(fileUrl)
-            .then(response => response.blob())  // Convertir la respuesta a blob
-            .then(blob => {
-                const link = document.createElement('a'); // Crear un enlace de descarga
-                link.href = URL.createObjectURL(blob);  // Crear un objeto URL para el blob
-                link.download = fileName;  // Usar el nombre del archivo que recibió de la API
-                document.body.appendChild(link); // Añadir el enlace al documento
-                link.click(); // Simular clic en el enlace para iniciar la descarga
-                document.body.removeChild(link); // Eliminar el enlace después de usarlo
-                URL.revokeObjectURL(link.href); // Revocar el objeto URL
-            })
-            .catch(error => {
-                alert('Error al descargar el archivo: ' + error.message); // Mostrar mensaje de error al usuario
-            });
+        return response.blob(); // Convertir la respuesta a un blob
+    })
+    .then(blob => {
+        const link = document.createElement('a'); // Crear un enlace de descarga
+        link.href = URL.createObjectURL(blob); // Crear un objeto URL para el blob
+        link.download = 'audio.mp3'; // Nombre del archivo que se descargará
+        document.body.appendChild(link); // Añadir el enlace al documento
+        link.click(); // Simular clic en el enlace para iniciar la descarga
+        document.body.removeChild(link); // Eliminar el enlace después de usarlo
+        URL.revokeObjectURL(link.href); // Revocar el objeto URL
     })
     .catch(error => {
-        alert('Error al procesar la solicitud: ' + error.message); // Mostrar mensaje de error si la solicitud falla
+        alert(error.message); // Mostrar mensaje de error al usuario
     });
 });
