@@ -16,12 +16,13 @@ document.getElementById('div_convertidor').addEventListener('submit', function(e
         if (!response.ok) {
             throw new Error('Error al descargar el MP3');
         }
-        return response.blob(); // Convertir la respuesta a un blob
+        const fileName = response.headers.get('File-Name') || 'audio.mp3'; // Obtener el nombre del archivo desde el encabezado
+        return response.blob().then(blob => ({ blob, fileName })); // Pasar blob y nombre juntos
     })
-    .then(blob => {
+    .then(({ blob, fileName }) => {
         const link = document.createElement('a'); // Crear un enlace de descarga
         link.href = URL.createObjectURL(blob); // Crear un objeto URL para el blob
-        link.download = 'audio.mp3'; // Nombre del archivo que se descargará
+        link.download = fileName; // Usar el nombre del archivo obtenido
         document.body.appendChild(link); // Añadir el enlace al documento
         link.click(); // Simular clic en el enlace para iniciar la descarga
         document.body.removeChild(link); // Eliminar el enlace después de usarlo
