@@ -1,4 +1,3 @@
-// api.js
 document.getElementById('div_convertidor').addEventListener('submit', function(event) {
     event.preventDefault(); // Evitar el envío del formulario por defecto
 
@@ -20,21 +19,20 @@ document.getElementById('div_convertidor').addEventListener('submit', function(e
         if (!response.ok) {
             throw new Error('Error al descargar el MP3');
         }
-
-        return response.json().then(data => {
-            const fileName = data.title ? `${data.title}.mp3` : 'audio.mp3'; // Usar el título proporcionado por la API
-
-            return response.blob().then(blob => ({ blob, fileName }));
-        });
+        return response.json();  // Parsear la respuesta JSON
     })
-    .then(({ blob, fileName }) => {
+    .then(data => {
+        // Obtener el nombre del archivo y la URL
+        const fileUrl = data.file_url;
+        const fileName = data.file_name;
+
+        // Crear un enlace para la descarga
         const link = document.createElement('a'); // Crear un enlace de descarga
-        link.href = URL.createObjectURL(blob); // Crear un objeto URL para el blob
-        link.download = fileName; // Usar el nombre original del archivo proporcionado por la API
+        link.href = fileUrl; // Usar la URL proporcionada por la API
+        link.download = fileName; // Usar el nombre original del archivo
         document.body.appendChild(link); // Añadir el enlace al documento
         link.click(); // Simular clic en el enlace para iniciar la descarga
         document.body.removeChild(link); // Eliminar el enlace después de usarlo
-        URL.revokeObjectURL(link.href); // Revocar el objeto URL
 
         // Cambiar el mensaje de estado
         statusMessage.textContent = 'Descarga completa';
