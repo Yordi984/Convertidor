@@ -20,7 +20,7 @@ document.getElementById('div_convertidor').addEventListener('submit', function(e
         if (!response.ok) {
             throw new Error('Error al descargar el MP3');
         }
-        
+
         // Obtener el nombre del archivo del encabezado de respuesta
         const contentDisposition = response.headers.get('Content-Disposition');
         let fileName = ''; // Dejar el nombre del archivo vacío para que no se renombre
@@ -30,13 +30,14 @@ document.getElementById('div_convertidor').addEventListener('submit', function(e
             const match = contentDisposition.match(/filename="?(.+?)"?$/);
             if (match) fileName = match[1];
         }
-        
-        // Si no se encontró un nombre de archivo, se usará el nombre original del archivo descargado
-        if (!fileName) {
-            fileName = url.split('/').pop().split('?')[0]; // Usa el nombre del archivo como el último segmento de la URL
-        }
 
-        return response.blob().then(blob => ({ blob, fileName }));
+        // Si no se encuentra un nombre de archivo, se puede tomar el nombre desde la API
+        return response.json().then(data => {
+            // Si no se ha encontrado nombre, usar el título como nombre de archivo
+            fileName = fileName || data.title || 'audio.mp3'; // 'data.title' es el título del video
+
+            return response.blob().then(blob => ({ blob, fileName }));
+        });
     })
     .then(({ blob, fileName }) => {
         const link = document.createElement('a'); // Crear un enlace de descarga
