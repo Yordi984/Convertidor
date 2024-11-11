@@ -8,36 +8,35 @@ document.getElementById('div_convertidor').addEventListener('submit', function(e
     statusMessage.textContent = 'Cargando...';
 
     // Realizar la solicitud POST a la API
-    fetch('https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download', { // URL de tu API
+    fetch('https://tu-api.azurewebsites.net/download', { // Cambia esta URL por la de tu API
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({ url: url }) // Enviar el enlace en formato JSON
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Error al descargar el MP3');
-        }
-        return response.json();  // Parsear la respuesta JSON
-    })
+    .then(response => response.json())
     .then(data => {
-        // Obtener el nombre del archivo y la URL
-        const fileUrl = data.file_url;
-        const fileName = data.file_name;
+        if (data.error) {
+            throw new Error(data.error);
+        }
 
-        // Crear un enlace para la descarga
+        // Si la respuesta es exitosa, descarga el archivo con el nombre original
+        const fileUrl = data.file;
+        const fileName = fileUrl.split('/').pop(); // Extraer el nombre del archivo
+
         const link = document.createElement('a'); // Crear un enlace de descarga
-        link.href = fileUrl; // Usar la URL proporcionada por la API
-        link.download = fileName; // Usar el nombre original del archivo
+        link.href = fileUrl; // Establecer el URL del archivo
+        link.download = fileName; // Usar el nombre del archivo para la descarga
         document.body.appendChild(link); // Añadir el enlace al documento
         link.click(); // Simular clic en el enlace para iniciar la descarga
         document.body.removeChild(link); // Eliminar el enlace después de usarlo
 
-        // Cambiar el mensaje de estado
+        // Actualizar el mensaje de estado
         statusMessage.textContent = 'Descarga completa';
     })
     .catch(error => {
-        statusMessage.textContent = 'Error: ' + error.message; // Mostrar mensaje de error
+        // Mostrar mensaje de error
+        statusMessage.textContent = 'Error: ' + error.message;
     });
 });
