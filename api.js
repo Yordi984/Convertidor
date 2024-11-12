@@ -26,7 +26,7 @@ document.getElementById('div_convertidor').addEventListener('submit', function(e
         
         if (contentDisposition && contentDisposition.includes('filename=')) {
             const match = contentDisposition.match(/filename="?(.+?)"?$/);
-            if (match) fileName = match[1]; // Extrae el nombre del archivo de los encabezados
+            if (match) fileName = match[1];
         }
 
         return response.blob().then(blob => ({ blob, fileName }));
