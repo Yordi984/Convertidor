@@ -22,7 +22,7 @@ document.getElementById('div_convertidor').addEventListener('submit', function(e
         
         // Obtener el nombre del archivo del encabezado de respuesta
         const contentDisposition = response.headers.get('Content-Disposition');
-        let fileName = 'audio.mp3'; // Nombre por defecto si no se encuentra en la cabecera
+        let fileName = 'Yconverter.mp3'; // Nombre por defecto si no se encuentra en la cabecera
         
         if (contentDisposition && contentDisposition.includes('filename=')) {
             const match = contentDisposition.match(/filename="?(.+?)"?$/);
