@@ -1,4 +1,4 @@
-document.getElementById('form_convertidor').addEventListener('submit', function(event) {
+document.getElementById('div_convertidor').addEventListener('submit', function(event) {
     event.preventDefault(); // Evitar el envío del formulario por defecto
 
     const url = document.getElementById('url').value; // Obtener el enlace de YouTube
