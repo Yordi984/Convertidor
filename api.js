@@ -5,7 +5,7 @@ document.getElementById('div_convertidor').addEventListener('submit', function(e
 
     // Mostrar mensaje de carga mientras se procesa la solicitud
     const statusMessage = document.getElementById('status');
-    statusMessage.textContent = 'Cargando...';
+    statusMessage.textContent = 'Descargando video...';
 
     // Realizar la solicitud POST a la API
     fetch('https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download', { // URL de tu API
@@ -17,12 +17,12 @@ document.getElementById('div_convertidor').addEventListener('submit', function(e
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Error al descargar el MP3');
+            throw new Error('Error al descargar el video');
         }
         
         // Obtener el nombre del archivo del encabezado de respuesta
         const contentDisposition = response.headers.get('Content-Disposition');
-        let fileName = 'Yconverter.mp3'; // Nombre por defecto si no se encuentra en la cabecera
+        let fileName = 'Yconverter_video.mp4'; // Nombre por defecto si no se encuentra en la cabecera
         
         if (contentDisposition && contentDisposition.includes('filename=')) {
             const match = contentDisposition.match(/filename="?(.+?)"?$/);
