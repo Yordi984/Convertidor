@@ -5,33 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="css.css" />
-    <title>Yconverter</title>
+    <title>Yconverter - Convierte Videos de YouTube a MP3</title>
   </head>
   <body>
-    <h1 class="titulo">Yconverter</h1>
+    <!-- Encabezado principal -->
+    <header>
+      <h1 class="titulo">Yconverter</h1>
+      <p>Convierte fácilmente tus videos de YouTube a archivos MP3.</p>
+      <p>Solo ingresa el enlace del video y descarga tu música en segundos.</p>
+    </header>
 
-    <p>Convierte fácilmente tus videos de YouTube a archivos MP3.</p>
-    <p>Solo ingresa el enlace del video y descarga tu música en segundos.</p>
+    <!-- Sección principal -->
+    <main>
+      <section>
+        <form id="div_convertidor">
+          <div id="link">
+            <input
+              type="text"
+              id="url"
+              name="url"
+              placeholder="Introduce el enlace de YouTube"
+              required
+            />
+          </div>
+          <br />
+          <div>
+            <button id="boton" type="submit">Convertir a MP3</button>
+          </div>
+        </form>
+      </section>
+    </main>
 
-    <div>
-      <form id="div_convertidor">
-        <div id="link">
-          <input
-            type="text"
-            id="url"
-            name="url"
-            placeholder="Introduce el enlace de YouTube"
-            required
-          />
-        </div>
-        <br />
-        <button id="boton" type="submit">Convertir a MP3</button>
-      </form>
-    </div>
-   
-    <!-- Elemento para mostrar el estado de la descarga -->
-    <p id="status"></p>
-    
+    <!-- Pie de página -->
+    <footer>
+      <p>&copy; 2024 Yconverter. Todos los derechos reservados.</p>
+    </footer>
 
     <script src="api.js"></script>
   </body>
