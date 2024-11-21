@@ -1,0 +1,32 @@
+* {
+  color: #007bff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+#uno {
+  display: flex;
+  padding-top: 10rem;
+  padding-left: 7rem;
+  padding-right: 7rem;
+  gap: 5rem;
+}
+#dos {
+  display: flex;
+  padding-top: 10rem;
+  padding-left: 7rem;
+  padding-right: 7rem;
+  gap: 5rem;
+}
+img {
+  width: 30rem;
+  border-radius: 50%;
+}
+div {
+  display: block;
+  padding: 3rem;
+}
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: white;
+  max-width: 100%;
+  margin: 0;
+}

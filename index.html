@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="css.css" />
+    <title>Yconverter - Convierte Videos de YouTube a MP3</title>
+  </head>
+  <body>
+    <!-- Encabezado principal -->
+    <header>
+      <a href="sobremi.html" class="yo">Sobre mi</a>
+      <a href="https://www.youtube.com/" target="_blank"
+        ><img src="youtube.png" alt="YouTube" class="imagen"
+      /></a>
+      <a href="facebook.com" target="_blank"
+        ><img src="facebook.png" alt="facebook" class="imagen"
+      /></a>
+    </header>
+    <section>
+      <h1 class="titulo">Yconverter</h1>
+      <p>Convierte fácilmente tus videos de YouTube a archivos MP3.</p>
+      <p>Solo ingresa el enlace del video y descarga tu música en segundos.</p>
+    </section>
+
+    <!-- Sección principal -->
+    <main>
+      <section>
+        <form id="div_convertidor">
+          <div id="link">
+            <input
+              type="text"
+              id="url"
+              name="url"
+              placeholder="Introduce el enlace de YouTube"
+              required
+            />
+          </div>
+          <br />
+          <div>
+            <button id="boton" type="submit">Convertir a MP3</button>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <!-- Pie de página -->
+    <footer>
+      <p>&copy; 2024 Yconverter. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="api.js"></script>
+  </body>
+</html>
