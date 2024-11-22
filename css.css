@@ -5,24 +5,22 @@ body {
   margin: 0;
 }
 header {
-  margin: 0;
-  border: 0;
+  width: 100%;
   background-color: white;
   height: 6rem;
-  padding-left: 65rem;
-  padding-right: 5rem;
   display: flex;
+  justify-content: right;
   gap: 7rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
   position: fixed; /* Hace que el encabezado se quede fijo */
   top: 0; /* Coloca el header en la parte superior */
   left: 0; /* Alinea el header con el borde izquierdo */
-  width: 100%;
 }
 .imagen {
   height: 3rem;
   overflow: hidden;
   padding-top: 1.5rem;
+  padding-right: 4rem;
 }
 .yo {
   padding-top: 3rem;
@@ -49,9 +47,9 @@ div {
 }
 
 p {
-  width: 40rem;
-  padding: 0 0 0 30rem;
   color: #007bff;
+  display: flex;
+  justify-content: center;
 }
 button {
   background-color: #007bff;
@@ -65,7 +63,7 @@ button {
 footer {
   padding-top: 6rem;
   display: flex;
-  justify-items: center;
+  justify-content: center;
 }
 section {
   padding-bottom: 1rem;
