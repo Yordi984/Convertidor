@@ -8,7 +8,7 @@ document.getElementById('div_convertidor').addEventListener('submit', function(e
     statusMessage.textContent = 'Descargando video...';
 
     // Realizar la solicitud POST a la API
-    fetch('https://api-mp3-b4hdf7hye4ged7dp.mexicocentral-01.azurewebsites.net/download', { // URL de tu API
+    fetch('api-express-l6z7sncbl-yordis-projects.vercel.app/download', { // URL de tu API
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
